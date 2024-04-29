@@ -24,7 +24,6 @@ export default ({
     },
     methods: {
         handleSaveSuccess(newLensData) {
-            
             if(newLensData){
                 console.log('newLensData : ', newLensData);
                 this.newItem = newLensData;

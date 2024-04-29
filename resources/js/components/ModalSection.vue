@@ -155,15 +155,17 @@ export default {
         getLensMark(id, type){
             // if(id){
             //     console.log("id : ", id);
-                
             // }
+            console.log("getLensMark : ", id);
             this.$axios.get('/api/lensMark/show/'+id)
                 .then((res) => {
                     //console.log("res.data : ", res.data);
                     if(id){
                         this.lensData = res.data;
                         if(type){
+                            console.log('부모컴포넌트로 전달_type : ', type);
                             this.$emit('saveSuccess', this.lensData); //부모 컴포넌트로 전달
+                            //console.log('부모컴포넌트로 전달_type2 : ', type);
                         }
                     }
                     
@@ -207,7 +209,7 @@ export default {
             })
                 .then((res)=>{ 
                     console.log('res.data.lensMark' , res.data.lensMark);
-                    let id = res.data.lensMark.id;
+                    let id = res.data.lensMark;
                     this.closeModal();
                     this.getLensMark(id, 'refresh');
                     

@@ -21875,14 +21875,16 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       var _this = this;
       // if(id){
       //     console.log("id : ", id);
-
       // }
+      console.log("getLensMark : ", id);
       this.$axios.get('/api/lensMark/show/' + id).then(function (res) {
         //console.log("res.data : ", res.data);
         if (id) {
           _this.lensData = res.data;
           if (type) {
+            console.log('부모컴포넌트로 전달_type : ', type);
             _this.$emit('saveSuccess', _this.lensData); //부모 컴포넌트로 전달
+            //console.log('부모컴포넌트로 전달_type2 : ', type);
           }
         }
       })["catch"](function (err) {
@@ -21921,7 +21923,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         }
       }).then(function (res) {
         console.log('res.data.lensMark', res.data.lensMark);
-        var id = res.data.lensMark.id;
+        var id = res.data.lensMark;
         _this2.closeModal();
         _this2.getLensMark(id, 'refresh');
       })["catch"](function (err) {
@@ -21985,7 +21987,7 @@ __webpack_require__.r(__webpack_exports__);
     Modal: _ModalSection_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
-    NewItem: {
+    newItem: {
       type: Object,
       "default": function _default() {
         return {};
@@ -22028,10 +22030,23 @@ __webpack_require__.r(__webpack_exports__);
         this.state.items.splice(index, 1);
       }
       this.getAllMarkLens();
+    },
+    handleSaveSuccess: function handleSaveSuccess(newLensData) {
+      // 수정시 즉시 반영을 위한 핸들러
+      if (newLensData) {
+        //console.log('newLensData : ', newLensData);
+        this.getAllMarkLens();
+        //this.state.items.push(newLensData);
+        //this.newItem = newLensData;
+        // console.log('this.items: ', this.newItem);
+        // console.log('this.items_type: ', typeof this.newItem);
+        // this.getAllMarkLens();
+      }
     }
   },
   watch: {
     newItem: function newItem(newVal) {
+      // 부모(/js/App.vue) 에서 옴
       if (newVal && Object.keys(newVal).length > 0) {
         // newItem이 존재하고 빈 객체가 아닐 경우
         console.log('newVal감지', newVal);
@@ -22505,10 +22520,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, " GO ", 8 /* PROPS */, _hoisted_17)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Modal, {
       buttonText: _this.buttonText,
       id: item.mark_no,
+      onSaveSuccess: $options.handleSaveSuccess,
       onDeleteSuccess: _cache[0] || (_cache[0] = function ($event) {
         return $options.deleteRow($event);
       })
-    }, null, 8 /* PROPS */, ["buttonText", "id"])])]);
+    }, null, 8 /* PROPS */, ["buttonText", "id", "onSaveSuccess"])])]);
   }), 128 /* KEYED_FRAGMENT */))])])])])])])]);
 }
 

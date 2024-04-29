@@ -67,7 +67,10 @@
                                         </a>
                                     </td>
                                     <td class="text-dark border-b border-r border-[#E8E8E8] bg-white dark:border-dark dark:bg-dark-2 dark:text-dark-7 py-5 px-2 text-center text-base font-medium">
-                                        <Modal :buttonText ="this.buttonText" :id ="item.mark_no" @deleteSuccess="deleteRow($event)" />
+                                        <Modal :buttonText ="this.buttonText" 
+                                               :id ="item.mark_no" 
+                                                @saveSuccess="handleSaveSuccess" 
+                                                @deleteSuccess="deleteRow($event)" />
                                     </td>
                                 </tr>
                         </tbody>
@@ -84,7 +87,7 @@ import Modal from "./ModalSection.vue";
 export default ({
     components: { Modal },
     props: {
-        NewItem: {
+        newItem: {
             type: Object,
             default: () => ({}) // 기본 값으로 빈 객체를 반환
         } 
@@ -125,9 +128,20 @@ export default ({
             }
             this.getAllMarkLens();
         },
+        handleSaveSuccess(newLensData) {    // 수정시 즉시 반영을 위한 핸들러
+            if(newLensData){
+                //console.log('newLensData : ', newLensData);
+                this.getAllMarkLens();
+                //this.state.items.push(newLensData);
+                //this.newItem = newLensData;
+                // console.log('this.items: ', this.newItem);
+                // console.log('this.items_type: ', typeof this.newItem);
+                // this.getAllMarkLens();
+            }       
+        },
     },
     watch: {
-        newItem(newVal) {
+        newItem(newVal) {       // 부모(/js/App.vue) 에서 옴
             if (newVal && Object.keys(newVal).length > 0) { // newItem이 존재하고 빈 객체가 아닐 경우
                 console.log('newVal감지', newVal);
                 this.state.items.push(newVal);

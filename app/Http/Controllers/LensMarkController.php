@@ -80,7 +80,7 @@ class LensMarkController extends Controller
                 if ($lensMarkFile->save()) {
                     return response()->json(['success' => true, 
                         'message' => 'Lens Mark and File created successfully.', 
-                        'lensMark' => $lensMark], 200
+                        'lensMark' => $lensMark->id], 200
                     );
                 } else {
                     return response()->json(['success' => false, 'message' => 'Saved fail'], 500);
@@ -104,7 +104,7 @@ class LensMarkController extends Controller
         $LensMark = DB::table('lens_marks')
                     ->join('lens_mark_files', 'lens_marks.id', '=', 'lens_mark_files.mark_no')
                     ->where('lens_marks.id', $id) // $id에 해당하는 레코드만 선택
-                    ->select('lens_marks.*', 'lens_mark_files.product_mark1', 'lens_mark_files.product_mark2', 'lens_mark_files.link')
+                    ->select('lens_marks.*', 'lens_mark_files.product_mark1', 'lens_mark_files.product_mark2', 'lens_mark_files.link', 'lens_mark_files.mark_no')
                     ->first();
 
         if (!$LensMark) {
@@ -142,7 +142,6 @@ class LensMarkController extends Controller
             }
             
             $validatedData = $request->validated(); // 유효성 검사
-            
             $lensMark->classification = $validatedData['classification'];
             $lensMark->manufacturer = $validatedData['manufacturer'];
             $lensMark->product_name = $validatedData['product_name'];
@@ -150,7 +149,11 @@ class LensMarkController extends Controller
             $lensMark->keyword = $validatedData['keyword'];
             
             if ($lensMark->save()) {
-                return response()->json(['success' => true, 'message' => 'LensMark updated successfully'], 200);
+                return response()->json([
+                    'success' => true, 
+                    'message' => 'LensMark updated successfully',
+                    'lensMark' => $id
+                ], 200);
             } else {
                 return response()->json(['success' => false, 'message' => 'LensMark update failed'], 500);
             }
