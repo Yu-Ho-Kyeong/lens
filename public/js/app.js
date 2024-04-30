@@ -22292,16 +22292,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getAllMarkLens();
-    if (this.NewItem) {
-      console.log('TblSection_NewItem: ', this.NewItem);
-    } else {
-      console.log('TblSection_NewItem: 안들어옴');
-    }
-    if (this.searchItem) {
-      console.log('TblSection_searchItem: ', this.searchItem);
-    } else {
-      console.log('TblSection_searchItem: 안들어옴');
-    }
   },
   methods: {
     // 전체리스트 불러오기
@@ -22310,8 +22300,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$axios.get('/api/lensMark').then(function (res) {
         _this.state.items = res.data;
         _this.$emit('getSuccess', _this.state.items); //부모 컴포넌트로 전달
-        // console.log('부모컴포넌트로 전달_type : ', type);
-        // console.log("lens_data : " + JSON.stringify(res.data), null, 2);
       })["catch"](function (error) {
         console.error('lensMarks API 호출 중 에러 발생:', error);
       });
@@ -22329,13 +22317,7 @@ __webpack_require__.r(__webpack_exports__);
     handleSaveSuccess: function handleSaveSuccess(newLensData) {
       // 수정시 즉시 반영을 위한 핸들러
       if (newLensData) {
-        //console.log('newLensData : ', newLensData);
         this.getAllMarkLens();
-        //this.state.items.push(newLensData);
-        //this.newItem = newLensData;
-        // console.log('this.items: ', this.newItem);
-        // console.log('this.items_type: ', typeof this.newItem);
-        // this.getAllMarkLens();
       }
     }
   },
@@ -23042,7 +23024,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       value: option.value,
       key: index
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(option.name), 9 /* TEXT, PROPS */, _hoisted_7);
-  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.class_selected]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "선택됨 : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.class_selected), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.class_selected]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div>선택됨 : {{ class_selected }}</div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.manu_selected = $event;
     }),
@@ -23054,7 +23036,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       value: option.value,
       key: index
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(option.name), 9 /* TEXT, PROPS */, _hoisted_10);
-  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.manu_selected]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "선택됨 : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.manu_selected), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.manu_selected]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div>선택됨 : {{ manu_selected }}</div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.ref_selected = $event;
     }),
@@ -23066,7 +23048,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       value: option.value,
       key: index
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(option.name), 9 /* TEXT, PROPS */, _hoisted_13);
-  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.ref_selected]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, "선택됨 : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.ref_selected), 1 /* TEXT */)]), _hoisted_14])])])]);
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.ref_selected]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div>선택됨 : {{ ref_selected }}</div> ")]), _hoisted_14])])])]);
 }
 
 /***/ }),
@@ -23085,7 +23067,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "table_section bg-white dark:bg-dark"
+  "class": "table_section bg-white dark:bg-dark",
+  style: {
+    "margin-bottom": "10rem"
+  }
 };
 var _hoisted_2 = {
   "class": "container mx-auto"

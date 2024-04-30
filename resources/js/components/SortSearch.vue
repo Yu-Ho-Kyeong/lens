@@ -10,7 +10,7 @@
                                 {{ option.name }}
                             </option>
                         </select>
-                        <div>선택됨 : {{ class_selected }}</div>
+                        <!-- <div>선택됨 : {{ class_selected }}</div> -->
                     </div>
                     <div class="mt-6">
                         <label for="sort2" class="manufacturer mr-2">제조사별:</label>
@@ -19,7 +19,7 @@
                                 {{ option.name }}
                             </option>
                         </select>
-                        <div>선택됨 : {{ manu_selected }}</div>
+                        <!-- <div>선택됨 : {{ manu_selected }}</div> -->
                     </div>
                     <div class="mt-6">
                         <label for="sort3" class="refractive_index mr-2">굴절률별:</label>
@@ -28,7 +28,7 @@
                                 {{ option.name }}
                             </option>
                         </select>
-                        <div>선택됨 : {{ ref_selected }}</div>
+                        <!-- <div>선택됨 : {{ ref_selected }}</div> -->
                     </div>
                     <div class="mt-6">
                         <label for="sort4" class="keyword mr-2">제품마크별</label>
@@ -82,7 +82,7 @@ export default ({
                 }
             })
             .then((res)=>{
-                console.log("class.data : ", res.data);
+                //console.log("class.data : ", res.data);
                 this.state.lensItems = res.data;
                 this.$emit('searchData', this.state.lensItems);  
             })

@@ -1,5 +1,5 @@
 <template>
-    <section class="table_section bg-white dark:bg-dark">
+    <section class="table_section bg-white dark:bg-dark" style="margin-bottom:10rem">
         <div class="container mx-auto">
             <div class="flex flex-wrap -mx-4">
                 <div class="w-full px-4">
@@ -35,7 +35,6 @@
                         </thead>
 
                         <tbody>
-                            
                             <tr v-for="item in state.items" :key="item.id">
                                     <td class="text-dark border-b border-l border-[#E8E8E8] bg-[#F3F6FF] dark:bg-dark-3 dark:border-dark dark:text-dark-7 py-5 px-2 text-center text-base font-medium">
                                         {{ item.classification }}
@@ -106,17 +105,6 @@ export default ({
     },
     mounted () {
         this.getAllMarkLens();
-        if(this.NewItem){
-            console.log('TblSection_NewItem: ', this.NewItem);
-        }else{
-            console.log('TblSection_NewItem: 안들어옴');
-        }
-
-        if(this.searchItem){
-            console.log('TblSection_searchItem: ', this.searchItem);
-        }else{
-            console.log('TblSection_searchItem: 안들어옴');
-        }
     },
     methods: {
         // 전체리스트 불러오기
@@ -125,8 +113,6 @@ export default ({
                 .then((res) => {  
                     this.state.items = res.data;
                     this.$emit('getSuccess', this.state.items); //부모 컴포넌트로 전달
-                    // console.log('부모컴포넌트로 전달_type : ', type);
-                    // console.log("lens_data : " + JSON.stringify(res.data), null, 2);
                 })
                 .catch((error) => {
                     console.error('lensMarks API 호출 중 에러 발생:', error);
@@ -142,13 +128,7 @@ export default ({
         },
         handleSaveSuccess(newLensData) {    // 수정시 즉시 반영을 위한 핸들러
             if(newLensData){
-                //console.log('newLensData : ', newLensData);
                 this.getAllMarkLens();
-                //this.state.items.push(newLensData);
-                //this.newItem = newLensData;
-                // console.log('this.items: ', this.newItem);
-                // console.log('this.items_type: ', typeof this.newItem);
-                // this.getAllMarkLens();
             }       
         },
     },
