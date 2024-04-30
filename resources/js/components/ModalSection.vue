@@ -135,7 +135,6 @@ export default {
                 classification : "",
                 manufacturer : "",
                 product_name : "",
-                classification : "",
                 refractive_index : "",
                 product_mark1 : "",
                 product_mark2 : "",
@@ -153,9 +152,6 @@ export default {
     },
     methods: {
         getLensMark(id, type){
-            // if(id){
-            //     console.log("id : ", id);
-            // }
             console.log("getLensMark : ", id);
             this.$axios.get('/api/lensMark/show/'+id)
                 .then((res) => {

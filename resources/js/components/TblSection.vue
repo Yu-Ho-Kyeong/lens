@@ -90,6 +90,10 @@ export default ({
         newItem: {
             type: Object,
             default: () => ({}) // 기본 값으로 빈 객체를 반환
+        },
+        searchItem:{
+            type: Array,
+            default: () => [] // 기본 값으로 빈 객체를 반환
         } 
     },
     data() {
@@ -107,6 +111,12 @@ export default ({
         }else{
             console.log('TblSection_NewItem: 안들어옴');
         }
+
+        if(this.searchItem){
+            console.log('TblSection_searchItem: ', this.searchItem);
+        }else{
+            console.log('TblSection_searchItem: 안들어옴');
+        }
     },
     methods: {
         // 전체리스트 불러오기
@@ -114,7 +124,9 @@ export default ({
             this.$axios.get('/api/lensMark')
                 .then((res) => {  
                     this.state.items = res.data;
-                    console.log("lens_data : " + JSON.stringify(res.data), null, 2);
+                    this.$emit('getSuccess', this.state.items); //부모 컴포넌트로 전달
+                    // console.log('부모컴포넌트로 전달_type : ', type);
+                    // console.log("lens_data : " + JSON.stringify(res.data), null, 2);
                 })
                 .catch((error) => {
                     console.error('lensMarks API 호출 중 에러 발생:', error);
@@ -145,6 +157,12 @@ export default ({
             if (newVal && Object.keys(newVal).length > 0) { // newItem이 존재하고 빈 객체가 아닐 경우
                 console.log('newVal감지', newVal);
                 this.state.items.push(newVal);
+            }
+        },
+        searchItem(newVal){
+            if (newVal) { // newItem이 존재하고 빈 객체가 아닐 경우
+                console.log('newVal감지', newVal);
+                this.state.items=newVal;
             }
         }
     },

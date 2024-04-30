@@ -9,7 +9,7 @@
     </head>
     <body>
         
-        <section class="bg-white dark:bg-dark py-20 lg:py-[120px]">
+        <section class="main-container">
             <div id="app">
                 <hello-world/>
             </div>

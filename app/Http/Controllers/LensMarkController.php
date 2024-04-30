@@ -7,8 +7,8 @@ use App\Models\LensMark;
 use App\Models\LensMarkFile;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreLensMarkRequest;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+
 
 class LensMarkController extends Controller
 {
@@ -23,24 +23,45 @@ class LensMarkController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $LensMarks = DB::table('lens_marks')
-                    ->join('lens_mark_files', 'lens_marks.id', '=', 'lens_mark_files.mark_no')
-                    ->select('lens_marks.*', 'lens_mark_files.*')
-                    ->get();
+    public function index(Request $request)
+    {   
+        $query = LensMark::join('lens_mark_files', 'lens_marks.id', '=', 'lens_mark_files.mark_no')
+                    ->select('lens_marks.*', 'lens_mark_files.*'); 
 
-
-        if (!$LensMarks) {
-            return response()->json(['message' => 'LensMark not found'], 404);
+        if (!$request) {
+            $LensMarks = $query->get();
+            //Log::info('That all data');
+        }else{
+            //Log::info('That part of data');
+            $condition = $request->input('condition');
+            //Log::info('request', $request->all());
+            switch ($condition) {
+                case 'classification':
+                    //Log::info('classification', ['classification' => $request->input('selected')]);
+                    $query->where('classification', $request->input('selected'));
+                    break;
+                case 'manufacturer':
+                    Log::info('manufacturer');
+                    $query->where('manufacturer', $request->input('selected'));
+                    break;
+                case 'refractive_index':
+                    Log::info('manufacturer');
+                    $query->where('refractive_index', $request->input('selected'));
+                    break;
+                case 'keyword':
+                    $query->where('keyword', $request->input('keyword_value'));
+                    break;
+                default:
+                    // 예외 처리 또는 기본 동작 정의
+                    break;
+            }
+            $LensMarks = $query->get();
+            //dd('$LensMarks', $LensMarks);
         }
-                    
         return response()->json($LensMarks);
-        //dd("LensMarks.classification : ", $LensMarks);
-        // return view('layouts.index', compact('LensMarks'));
     }
 
     /**
@@ -183,5 +204,92 @@ class LensMarkController extends Controller
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'An error occurred while deleting LensMark and LensMarkFile.'], 500);
         }
+    }
+
+    /**
+     * Display a listing of the resource.
+     * 분류별 분류
+     * @return \Illuminate\Http\Response
+     */
+    public function findClassification()
+    {
+        $classification = DB::table('lens_marks')
+                    ->select('classification')
+                    ->get();
+
+        if (!$classification) {
+            return response()->json(['message' => 'classification not found'], 404);
+        }
+                    
+        return response()->json($classification);
+    }
+    /**
+     * Display a listing of the resource.
+     * 제조사별 분류
+     * @return \Illuminate\Http\Response
+     */
+    public function findManufacturer()
+    {
+        $manufacturer = DB::table('lens_marks')
+                    ->select('manufacturer')
+                    ->get();
+
+        if (!$manufacturer) {
+            return response()->json(['message' => 'classification not found'], 404);
+        }
+                    
+        return response()->json($manufacturer);
+    }
+    /**
+     * Display a listing of the resource.
+     * 굴절률별 분류
+     * @return \Illuminate\Http\Response
+     */
+    public function findRefractiveIndex()
+    {
+        $refractiveIndex = DB::table('lens_marks')
+                    ->select('refractive_index')
+                    ->get();
+
+        if (!$refractiveIndex) {
+            return response()->json(['message' => 'classification not found'], 404);
+        }
+                    
+        return response()->json($refractiveIndex);
+    }
+    /**
+     * Display a listing of the resource.
+     *  검색어별 분류
+     * @return \Illuminate\Http\Response
+     */
+    public function findKeyword()       
+    {
+        $keyword = DB::table('lens_marks')
+                    ->select('keyword')
+                    ->get();
+
+        if (!$keyword) {
+            return response()->json(['message' => 'classification not found'], 404);
+        }
+                    
+        return response()->json($keyword);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *  검색어별 분류
+     * @return \Illuminate\Http\Response
+     */
+    public function findByKeyword()       
+    {
+        $keyword = DB::table('lens_marks')
+                    ->select('keyword')
+                    ->get();
+
+        if (!$keyword) {
+            return response()->json(['message' => 'classification not found'], 404);
+        }
+                    
+        return response()->json($keyword);
     }
 }
